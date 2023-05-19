@@ -1,4 +1,3 @@
-
 <?php
 
 require_once "decryptResponse.php";
@@ -7,7 +6,8 @@ require_once "decryptResponse.php";
 
 
 // $url = "https://apijkn.bpjs-kesehatan.go.id/vclaim-rest/Peserta/nokartu/$noKartu/tglSEP/$tglSep";
-$url = "https://apijkn-dev.bpjs-kesehatan.go.id/vclaim-rest-dev/Peserta/nokartu/$noKartu/tglSEP/$tglSep";
+// $url = "https://apijkn-dev.bpjs-kesehatan.go.id/vclaim-rest-dev/Peserta/nokartu/$noKartu/tglSEP/$tglSep";
+$url = $urlInput;
 
 
 // echo"Masuk";
@@ -15,13 +15,16 @@ $url = "https://apijkn-dev.bpjs-kesehatan.go.id/vclaim-rest-dev/Peserta/nokartu/
 $session = curl_init($url);
 
 
-// $cid = "11148";
-// $ckey = "1uADAB4568";
-// $userKey = "5a8db1cacc070e74855b9e2038764535";
+$cid = $cIdInput;
+$ckey = $cKeyInput;
+$userKey = $userKeyInput;
 
-$cid = "18972";
-$ckey = "9iOB26B9EA";
-$userKey = "7df940159f5ed93866a7be5d2ad9e084";
+
+
+
+// $cid = "18972";
+// $ckey = "9iOB26B9EA";
+// $userKey = "7df940159f5ed93866a7be5d2ad9e084";
 
 
 
@@ -60,52 +63,30 @@ $responseAll = curl_exec($session);
 
 
 ?>
-
-<?php 
-
-
-
-
-
+<br><br>
+<center><label>Response:</label><br><textarea id="w3review" name="w3review" rows="8" cols="100">
+<?php echo $responseAll; ?>
+</textarea></center>
+<?php
 
 
-$cart=array(
-    "metaData"=>array(
-        "code"=>"200",
-        "message"=>"Sukses"
-    ),
-    "response"=>$inptValue
-);
-$responseAll = json_encode($cart);
-
-
-// var_dump($responseAll);
 $json = json_decode($responseAll, true);
 
-$code = $json['metaData']['code'];
-$messagePeserta = $json['metaData']['message'];
 $response = $json['response'];
 
+// $timestamp = $timestampInput;
+$decryptedResponse = stringDecrypt($cid . $ckey . $timestamp, $response);
+
+// var_dump($decryptedResponse);
 
 
-if (intval($json['metaData']['code']) == 200) {
 
-    $timestamp=$timestampInput;
-    $decryptedResponse = stringDecrypt($cid . $ckey . $timestamp, $response);
+$response = decompress($decryptedResponse);
+$responseFinal = json_decode($response, true);
 
+
+
+// var_dump($responseFinal);
+
+// var_dump($response);
     // var_dump($decryptedResponse);
-
-
-
-    $response = decompress($decryptedResponse);
-    $responseFinal = json_decode($response, true);
-    
-
-
-    // var_dump($response);
-
-    // var_dump($responseFinal);
-    // var_dump($decryptedResponse);
-
-}
-
