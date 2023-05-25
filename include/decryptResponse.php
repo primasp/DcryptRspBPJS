@@ -3,7 +3,7 @@
 require_once "vendor/autoload.php";
 
 
-$debugMessage .= 'successLoadedDecryptResponse';
+// $debugMessage .= 'successLoadedDecryptResponse';
 // C:\xampp\htdocs\jwbAPI\cekPeserta\vendor
 // function decrypt
 function stringDecrypt($key, $string){
@@ -26,5 +26,3 @@ $encrypt_method = 'AES-256-CBC';
 function decompress($string){
     return \LZCompressor\LZString::decompressFromEncodedURIComponent($string);
 }
-
-?>

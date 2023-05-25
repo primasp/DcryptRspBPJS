@@ -1,6 +1,4 @@
 <?php
-require_once("include/koneksi.php");
-
 
 if (isset($_POST["proses"]) and $_POST["proses"] == "form1") {
     $urlInput = trim($_POST["url"]);
@@ -8,8 +6,7 @@ if (isset($_POST["proses"]) and $_POST["proses"] == "form1") {
     $cKeyInput = trim($_POST["cKey"]);
     $userKeyInput = trim($_POST["userKey"]);
     $methodInput = trim($_POST["method"]);
-    // $timestampInput = trim($_POST["timestamp"]);
-    // $inptValue = trim($_POST["inptValue"]);
+    $inputBody = trim($_POST["inputBody"]);
 }
 ?>
 
@@ -136,7 +133,14 @@ if (isset($_POST["proses"]) and $_POST["proses"] == "form1") {
                                     </div>
                                 </div>
 
-
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <textarea id="inputBody" name="inputBody" class="form-control" rows="15"><?php echo $inputBody ?></textarea>
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
@@ -157,31 +161,9 @@ if (isset($_POST["proses"]) and $_POST["proses"] == "form1") {
 
 
                     <?php
-                    if (!empty($urlInput) && !empty($cIdInput)  && !empty($cKeyInput)  && !empty($userKeyInput) && !empty($methodInput)) {
-                        // echo $timestamp;
-                        // echo $inptValue;
-
+                    if (!empty($urlInput) && !empty($cIdInput)  && !empty($cKeyInput)  && !empty($userKeyInput) && !empty($methodInput) && $methodInput == "GET") {
                         require_once "include/decrypt.php";
-
-                        // echo $tglSep; 
-                        // if ($kodePeserta == 200) {
-                        // echo"PENCARIAN BY NO.KARTU BPJS";
-                        //  $noKartuBPJS = $noKartu;
-                        //  $NIK_Pasien = $NIK;
-                        //  $Nama_Pasien = $nama;
-                        //  $tglLhr_Pasien = $tglLahir;
-                        //  $umur_Pasien = $umurSekarang;
-                        //  $FK1_Pasien = $nmProviderPserta;
-                        //  $Kd_FK1_Pasien = $kdProviderPserta;
-                        //  $HakKls_Pasien = $HakKelas;
-                        //  $StatPeserta_Pasien = $keteranganStatus;
-                        //  $JnsPeserta_Pasien = $keteranganJnsPsrt;
-
                     ?>
-
-
-
-
                         <br><br>
                         <center><label>Response2:</label><br>
 
@@ -194,21 +176,34 @@ if (isset($_POST["proses"]) and $_POST["proses"] == "form1") {
                                 </div>
                             </div>
                         <?php
-                    }
-
-
+                    } else if (!empty($urlInput) && !empty($cIdInput)  && !empty($cKeyInput)  && !empty($userKeyInput) && !empty($methodInput) && $methodInput == "POST") {
+                        require_once "include/decryptPost.php";
                         ?>
 
 
 
 
+                            <br><br>
+                            <center><label>Response2:</label><br>
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <textarea id="inptValue" name="inptValue" class="form-control" rows="15"><?php var_dump($responseFinal); ?></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php
+
+                        }
+
+
+                            ?>
 
 
 
 
-                        <!-- <br><br><center><label>Response:</label><br><textarea id="w3review" name="w3review" rows="8" cols="100">
-
-</textarea></center> -->
 
 
 
